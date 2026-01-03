@@ -1,10 +1,124 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <title>Mohzy</title>
-  </head>
-  <body>
-    <h1>Welcome to mohzy.ca</h1>
-    <p>My website is live 🎉</p>
-  </body>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mohzy | Personal Portfolio</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="logo">mohzy<span class="dot">.ca</span></div>
+        <ul class="nav-links">
+            <li><a href="#about">About</a></li>
+            <li><a href="#projects">Projects</a></li>
+            <li><a href="#contact" class="btn-primary">Contact</a></li>
+        </ul>
+    </nav>
+
+    <header class="hero">
+        <div class="hero-content">
+            <p class="greeting">Hello, I'm Mohzy</p>
+            <h1>Building <span class="gradient-text">Digital Experiences</span> <br> & Exploring Tech.</h1>
+            <p class="subtitle">Welcome to my personal playground on the web.</p>
+            <div class="hero-btns">
+                <a href="#projects" class="btn-primary">View Projects</a>
+                <a href="https://github.com/YOURUSERNAME" target="_blank" class="btn-secondary"><i class="fab fa-github"></i> GitHub</a>
+            </div>
+        </div>
+    </header>
+
+    <section id="about" class="container">
+        <h2 class="section-title">About Me</h2>
+        <div class="bento-grid">
+            <div class="card wide">
+                <h3>Who I Am</h3>
+                <p>I'm a passionate enthusiast exploring the world of technology. This website is my sandbox where I experiment with code, design, and new ideas.</p>
+            </div>
+            <div class="card tall">
+                <i class="fas fa-code icon-large"></i>
+                <h3>Tech Stack</h3>
+                <ul class="tech-list">
+                    <li>HTML/CSS</li>
+                    <li>Git/GitHub</li>
+                    <li>Cloud</li>
+                    <li>Web Design</li>
+                </ul>
+            </div>
+            <div class="card">
+                <h3>Location</h3>
+                <p>Based in Canada 🇨🇦</p>
+            </div>
+            <div class="card">
+                <h3>Status</h3>
+                <p>Currently Learning <br> & Building</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="projects" class="container">
+        <h2 class="section-title">Recent Updates</h2>
+        <div class="project-grid">
+            <div class="project-card">
+                <div class="card-header">
+                    <i class="fas fa-folder-open"></i>
+                    <div class="links">
+                        <a href="#"><i class="fas fa-external-link-alt"></i></a>
+                    </div>
+                </div>
+                <h3>Project Alpha</h3>
+                <p>A placeholder for your first major project or repository. Description goes here.</p>
+                <div class="tags">
+                    <span>HTML</span>
+                    <span>CSS</span>
+                </div>
+            </div>
+            
+            <div class="project-card">
+                <div class="card-header">
+                    <i class="fas fa-laptop-code"></i>
+                    <div class="links">
+                        <a href="#"><i class="fas fa-external-link-alt"></i></a>
+                    </div>
+                </div>
+                <h3>Project Beta</h3>
+                <p>Another cool thing you are working on. Maybe a script or a design concept.</p>
+                <div class="tags">
+                    <span>Python</span>
+                    <span>Automation</span>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <div class="card-header">
+                    <i class="fas fa-terminal"></i>
+                    <div class="links">
+                        <a href="#"><i class="fas fa-external-link-alt"></i></a>
+                    </div>
+                </div>
+                <h3>Config Files</h3>
+                <p>My personal configuration files and setups for my development environment.</p>
+                <div class="tags">
+                    <span>Bash</span>
+                    <span>Config</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer id="contact">
+        <p>&copy; 2026 Mohzy.ca. Built for fun.</p>
+        <div class="socials">
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-linkedin"></i></a>
+            <a href="#"><i class="fab fa-github"></i></a>
+        </div>
+    </footer>
+
+</body>
 </html>
