@@ -8,6 +8,11 @@
     --accent-gradient: linear-gradient(90deg, #38bdf8, #818cf8);
     --glass: rgba(255, 255, 255, 0.05);
     --border: rgba(255, 255, 255, 0.1);
+
+    /* Motion tokens (premium + restrained) */
+    --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+    --ease-soft: cubic-bezier(0.2, 0.8, 0.2, 1);
+    --reveal-duration: 900ms;
 }
 
 * {
@@ -16,6 +21,8 @@
     box-sizing: border-box;
     font-family: 'Outfit', sans-serif;
 }
+
+html { scroll-behavior: smooth; }
 
 body {
     background-color: var(--bg-color);
@@ -26,6 +33,9 @@ body {
 
 a { text-decoration: none; color: inherit; transition: 0.3s; }
 ul { list-style: none; }
+
+/* Ensure anchors land nicely with fixed navbar */
+section, footer { scroll-margin-top: 90px; }
 
 /* --- Navigation --- */
 .navbar {
@@ -39,6 +49,14 @@ ul { list-style: none; }
     background: rgba(15, 23, 42, 0.8);
     backdrop-filter: blur(10px);
     z-index: 1000;
+
+    /* subtle premium elevation transition */
+    transition: box-shadow 400ms var(--ease-soft), background 400ms var(--ease-soft);
+}
+
+.navbar.is-scrolled {
+    background: rgba(15, 23, 42, 0.88);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.25);
 }
 
 .logo { font-weight: 700; font-size: 1.5rem; letter-spacing: -1px; }
@@ -55,6 +73,7 @@ ul { list-style: none; }
     color: #fff;
     font-weight: 500;
     box-shadow: 0 4px 15px rgba(56, 189, 248, 0.3);
+    transition: transform 300ms var(--ease-soft), box-shadow 300ms var(--ease-soft);
 }
 
 .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(56, 189, 248, 0.5); }
@@ -64,8 +83,9 @@ ul { list-style: none; }
     padding: 10px 25px;
     border-radius: 50px;
     margin-left: 10px;
+    transition: border-color 300ms var(--ease-soft), color 300ms var(--ease-soft), transform 300ms var(--ease-soft);
 }
-.btn-secondary:hover { border-color: var(--accent); color: var(--accent); }
+.btn-secondary:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-1px); }
 
 /* --- Hero Section --- */
 .hero {
@@ -76,6 +96,12 @@ ul { list-style: none; }
     text-align: center;
     padding: 0 20px;
     background: radial-gradient(circle at 50% 50%, rgba(56, 189, 248, 0.1) 0%, transparent 50%);
+}
+
+.hero-content {
+    /* for transform-only parallax */
+    will-change: transform;
+    transform: translate3d(0, 0, 0);
 }
 
 .hero h1 {
@@ -94,7 +120,27 @@ ul { list-style: none; }
 
 /* --- Container & Layouts --- */
 .container { padding: 80px 10%; }
-.section-title { font-size: 2rem; margin-bottom: 40px; border-left: 4px solid var(--accent); padding-left: 15px; }
+.section-title {
+    font-size: 2rem;
+    margin-bottom: 40px;
+    border-left: 4px solid var(--accent);
+    padding-left: 15px;
+    position: relative;
+}
+
+/* Subtle premium accent shimmer (kept minimal + theme-consistent) */
+.section-title::after {
+    content: "";
+    position: absolute;
+    left: 15px;
+    bottom: -12px;
+    height: 1px;
+    width: min(240px, 60%);
+    background: linear-gradient(90deg, rgba(56,189,248,0.0), rgba(56,189,248,0.55), rgba(129,140,248,0.0));
+    opacity: 0.6;
+    transform: scaleX(0.85);
+    transform-origin: left;
+}
 
 /* --- Bento Grid (About) --- */
 .bento-grid {
@@ -108,7 +154,8 @@ ul { list-style: none; }
     padding: 30px;
     border-radius: 20px;
     border: 1px solid var(--border);
-    transition: transform 0.3s ease;
+    transition: transform 300ms var(--ease-soft), border-color 300ms var(--ease-soft);
+    will-change: transform;
 }
 
 .card:hover { transform: translateY(-5px); border-color: var(--accent); }
@@ -127,7 +174,8 @@ ul { list-style: none; }
     padding: 30px;
     border-radius: 16px;
     border: 1px solid var(--border);
-    transition: 0.3s;
+    transition: background 300ms var(--ease-soft), transform 300ms var(--ease-soft);
+    will-change: transform;
 }
 
 .project-card:hover { background: var(--card-bg); transform: translateY(-5px); }
@@ -152,10 +200,66 @@ footer {
 .socials a { margin: 0 15px; }
 .socials a:hover { color: var(--accent); }
 
+/* =========================
+   Premium scroll reveals
+   ========================= */
+
+/* Base reveal: transform/opacity only (plus a tiny blur for “premium” feel) */
+.reveal {
+    opacity: 0;
+    transform: translate3d(0, 18px, 0) scale(0.985);
+    filter: blur(8px);
+    transition:
+        opacity var(--reveal-duration) var(--ease-out),
+        transform var(--reveal-duration) var(--ease-out),
+        filter var(--reveal-duration) var(--ease-out);
+    transition-delay: var(--delay, 0ms);
+    will-change: transform, opacity, filter;
+}
+
+.reveal.in-view {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+    filter: blur(0);
+}
+
+/* Stronger entrance for primary headings (About/Projects) */
+.reveal-title {
+    transform: translate3d(0, 26px, 0) scale(0.965);
+    filter: blur(10px);
+}
+
+/* Calmer motion for Contact/footer */
+.reveal-calm {
+    transform: translate3d(0, 10px, 0) scale(0.995);
+    filter: blur(6px);
+    transition-duration: 1000ms;
+}
+
+/* Optional: keep reveal snappy on smaller screens */
+@media (max-width: 768px) {
+    :root { --reveal-duration: 750ms; }
+}
+
 /* --- Mobile Responsiveness --- */
 @media (max-width: 768px) {
     .hero h1 { font-size: 2.5rem; }
     .bento-grid { grid-template-columns: 1fr; }
     .wide { grid-column: span 1; }
     .nav-links { display: none; } /* Simplified for mobile */
+}
+
+/* --- Accessibility: Reduced Motion --- */
+@media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+
+    .reveal {
+        opacity: 1 !important;
+        transform: none !important;
+        filter: none !important;
+        transition: none !important;
+    }
+
+    .navbar { transition: none; }
+    .btn-primary, .btn-secondary, .card, .project-card { transition: none; }
 }
